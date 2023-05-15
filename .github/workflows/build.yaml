@@ -30,7 +30,7 @@ jobs:
     name: docker build
     steps:
       - uses: actions/checkout@v3
-      - uses: plantoncloud/gh-action-build-docker@main
+      - uses: plantoncloud/gh-action-build-docker@chore/inherenc
         with:
           planton_cloud_service_cli_env: ${{ inputs.PLANTON_CLOUD_SERVICE_CLI_ENV }}
           planton_cloud_service_client_id: ${{ secrets.PLANTON_CLOUD_SERVICE_CLIENT_ID }}
