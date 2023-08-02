@@ -3,12 +3,12 @@ name: build:docker
 on:
   workflow_call:
     secrets:
-      PLANTON_CLOUD_SERVICE_CLIENT_ID:
+      PLANTON_CLOUD_CLIENT_ID:
         required: true
-      PLANTON_CLOUD_SERVICE_CLIENT_SECRET:
+      PLANTON_CLOUD_CLIENT_SECRET:
         required: true
     inputs:
-      PLANTON_CLOUD_SERVICE_CLI_ENV:
+      PLANTON_CLOUD_CLI_ENVIRONMENT:
         required: true
         type: string
       PLANTON_CLOUD_ARTIFACT_STORE_ID:
@@ -20,7 +20,7 @@ on:
       CONTAINER_IMAGE_NAME:
         required: true
         type: string
-      CONTAINER_IMAGE_VERSION:
+      container_image_tag:
         required: true
         type: string
 
@@ -32,10 +32,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: plantoncloud/gh-action-build-docker@chore/inherenc
         with:
-          planton_cloud_service_cli_env: ${{ inputs.PLANTON_CLOUD_SERVICE_CLI_ENV }}
-          planton_cloud_service_client_id: ${{ secrets.PLANTON_CLOUD_SERVICE_CLIENT_ID }}
-          planton_cloud_service_client_secret: ${{ secrets.PLANTON_CLOUD_SERVICE_CLIENT_SECRET }}
+          planton_cloud_cli_environment: ${{ inputs.PLANTON_CLOUD_CLI_ENVIRONMENT }}
+          planton_cloud_client_id: ${{ secrets.PLANTON_CLOUD_CLIENT_ID }}
+          planton_cloud_client_secret: ${{ secrets.PLANTON_CLOUD_CLIENT_SECRET }}
           planton_cloud_artifact_store_id: ${{ inputs.PLANTON_CLOUD_ARTIFACT_STORE_ID }}
           planton_cloud_artifact_store_docker_repo_hostname: ${{ inputs.PLANTON_CLOUD_ARTIFACT_STORE_DOCKER_REPO_HOSTNAME }}
           container_image_name: ${{ inputs.CONTAINER_IMAGE_NAME }}
-          container_image_version: ${{ inputs.CONTAINER_IMAGE_VERSION }}
+          container_image_tag: ${{ inputs.container_image_tag }}
