@@ -1,3 +1,6 @@
+name: Docker Build and Push
+description: Builds a Docker image and pushes it to the specified Docker repository
+
 name: Build Docker Image
 description: Builds a Docker image
 
@@ -22,22 +25,28 @@ runs:
       run: |
         echo "fetching artifact writer key from planton cloud service"
         artifact_writer_key_json_file="$(pwd)/artifact-writer-key.json"
-        planton artifact-store secrets get-writer-key --output-file $artifact_writer_key_json_file --artifact-store-id ${{ inputs.PLANTON_CLOUD_ARTIFACT_STORE_ID }}
+        planton artifact-store secrets get-writer-key --output-file $artifact_writer_key_json_file --artifact-store-id inputs.PLANTON_CLOUD_ARTIFACT_STORE_ID
         echo "fetched artifact writer key from planton cloud service"
         echo "ARTIFACT_WRITE_KEY_JSON_FILE_PATH=$artifact_writer_key_json_file" >> $GITHUB_ENV
       shell: bash
 
     - name: Docker Login
       run: |
-        ARTIFACT_WRITE_KEY_JSON=$(cat ${{ env.ARTIFACT_WRITE_KEY_JSON_FILE_PATH }})
-        echo $ARTIFACT_WRITE_KEY_JSON | docker login -u _json_key --password-stdin https://${{ inputs.DOCKER_REPO_HOSTNAME }}
+        ARTIFACT_WRITE_KEY_JSON=env.ARTIFACT_WRITE_KEY_JSON_FILE_PATH
+        echo $ARTIFACT_WRITE_KEY_JSON | docker login -u _json_key --password-stdin https://inputs.DOCKER_REPO_HOSTNAME
       shell: bash
 
     - name: Docker Build
       run: |
         echo "building container image"
-        export CONTAINER_IMAGE_REFERENCE=${{ inputs.CONTAINER_IMAGE_REPO }}:${{ inputs.CONTAINER_IMAGE_TAG }}
+        export CONTAINER_IMAGE_REFERENCE=inputs.CONTAINER_IMAGE_REPO:inputs.CONTAINER_IMAGE_TAG
         docker build -t $CONTAINER_IMAGE_REFERENCE .
         echo "built container image"
       shell: bash
 
+    - name: Docker Push
+      run: |
+        echo "pushing container image"
+        export CONTAINER_IMAGE_REFERENCE=inputs.CONTAINER_IMAGE_REPO:inputs.CONTAINER_IMAGE_TAG
+        docker push $CONTAINER_IMAGE_REFERENCE
+      shell: bash
