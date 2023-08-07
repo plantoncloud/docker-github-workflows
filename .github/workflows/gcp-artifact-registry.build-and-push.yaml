@@ -1,19 +1,23 @@
 name: Docker Build and Push
-description: Builds & Pushes a Docker Image to Docker Repo on GCP Artifact Registry
+
 on:
   workflow_call:
     inputs:
       PLANTON_CLOUD_ARTIFACT_STORE_ID:
         description: 'ID of the Artifact Store on Planton Cloud.'
+        type: string
         required: true
       DOCKER_REPO_HOSTNAME:
         description: 'Hostname of the Docker repository'
+        type: string
         required: true
       CONTAINER_IMAGE_REPO:
         description: 'Repo of the Docker image to be built and pushed.'
+        type: string
         required: true
       CONTAINER_IMAGE_TAG:
         description: 'Tag of the Docker image to be built and pushed.'
+        type: string
         required: true
 jobs:
   build-and-push:
