@@ -1,0 +1,32 @@
+name: Docker Build and Push
+description: Builds & Pushes a Docker Image to Docker Repo on GCP Artifact Registry
+
+inputs:
+  PLANTON_CLOUD_ARTIFACT_STORE_ID:
+    description: 'ID of the Artifact Store on Planton Cloud.'
+    required: true
+  DOCKER_REPO_HOSTNAME:
+    description: 'Hostname of the Docker repository'
+    required: true
+  CONTAINER_IMAGE_REPO:
+    description: 'Repo of the Docker image to be built and pushed.'
+    required: true
+  CONTAINER_IMAGE_TAG:
+    description: 'Tag of the Docker image to be built and pushed.'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: GCP Artifact Registry Docker Login
+      uses: plantoncloud/gcp-artifact-registry-docker-login-action@main
+      with:
+        planton_cloud_artifact_store_id: ${{ inputs.PLANTON_CLOUD_ARTIFACT_STORE_ID }}
+        docker_repo_hostname: ${{ inputs.DOCKER_REPO_HOSTNAME }}
+
+    - name: Build & Push Docker Image
+      uses: plantoncloud/build-and-push-docker-image-action@main
+      with:
+        docker_repo_hostname: ${{ inputs.DOCKER_REPO_HOSTNAME }}
+        container_image_repo: ${{ inputs.CONTAINER_IMAGE_REPO }}
+        container_image_tag: ${{ inputs.CONTAINER_IMAGE_TAG }}

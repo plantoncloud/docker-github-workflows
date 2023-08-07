@@ -1,43 +1,45 @@
-# GitHub Workflow: Docker Build and Push
+## GitHub Workflows for Docker Projects
 
-This repository provides a GitHub Workflow that automates the process of building a Docker image and pushing it to the specified Docker repository using Planton Cloud.
+This repository contains workflows for Docker Projects.
 
-The composite workflow is split into two distinct actions:
+### **1. GCP Artifact Registry - Docker Build and Push Workflow**
 
-1. **Build Docker Image:** This action automates the process of building a Docker image.
-2. **Docker Build and Push:** This action automates the entire process of both building the Docker image and pushing it to the specified Docker repository.
+#### Purpose:
+This workflow facilitates the building of Docker images and their subsequent push to Google Cloud Platform's Artifact Registry. 
 
-The workflow performs the following steps:
+#### Key Components:
+- **GCP Artifact Registry Docker Login**: Ensures secure login to GCP's Artifact Registry.
+- **Build & Push Docker Image**: Creates a Docker image from the source and pushes it to the specified GCP Artifact Registry repository.
 
-1. **Fetch Artifact Store Key:** Retrieves the writer key from Planton Cloud for the artifact store specified.
+#### Workflow Details:
+- **Name**: Docker Build and Push
+- **Description**: Builds & Pushes a Docker Image to Docker Repo on GCP Artifact Registry
+- **Inputs**:
+  - `PLANTON_CLOUD_ARTIFACT_STORE_ID`: ID of the Artifact Store on Planton Cloud.
+  - `DOCKER_REPO_HOSTNAME`: Hostname of the Docker repository.
+  - `CONTAINER_IMAGE_REPO`: Repository of the Docker image to be built and pushed.
+  - `CONTAINER_IMAGE_TAG`: Tag of the Docker image to be built and pushed.
 
-2. **Docker Login:** Logs into the Docker repository using the fetched writer key.
+### **Future Workflows**:
 
-3. **Docker Build:** Constructs the Docker image from the current directory.
+1. **AWS ECR - Docker Build and Push Workflow**: 
+   This workflow will be responsible for building Docker images and pushing them to the Amazon Web Services' Elastic Container Registry (ECR).
 
-4. **Docker Push:** Uploads the built Docker image to the specified Docker repository.
+2. **Kubernetes Deployment Workflow**:
+   Once Docker images are built and stored, this workflow will automate the deployment of the Docker image as a microservice on a Kubernetes cluster.
 
-## Usage
+### **Usage Notes**:
+- Ensure that all required secrets and configurations for authentication are set up in your GitHub repository, especially when interacting with external platforms like GCP.
 
-To leverage this composite workflow in your own workflows, reference it in your GitHub Actions. The workflow can be incorporated using the `uses` directive.
+## Support
 
-```yaml
-uses: <path_to_composite_action>@version
-```
-
-### Inputs
-
-The composite action requires the following inputs:
-
-- `PLANTON_CLOUD_ARTIFACT_STORE_ID`: ID of the Artifact Store on Planton Cloud.
-- `DOCKER_REPO_HOSTNAME`: Hostname of the Docker repository.
-- `CONTAINER_IMAGE_REPO`: Repository of the Docker image to be built and pushed.
-- `CONTAINER_IMAGE_TAG`: Tag of the Docker image to be built and pushed.
+If you encounter any issues or require further assistance, please file an issue in this GitHub repository.
 
 ## Contributing
 
-For suggestions or bug reports related to this GitHub Action, please open an issue. Contributions of all forms are appreciated.
+If you have suggestions for how this GitHub Action could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
 ## License
 
-This project is under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
+  
