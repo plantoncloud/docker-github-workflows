@@ -2,6 +2,12 @@ name: Docker Build and Push
 
 on:
   workflow_call:
+    secrets:
+      PLANTON_CLOUD_CLIENT_ID:
+        required: true
+      PLANTON_CLOUD_CLIENT_SECRET:
+        required: true
+
     inputs:
       PLANTON_CLOUD_ARTIFACT_STORE_ID:
         description: 'ID of the Artifact Store on Planton Cloud.'
